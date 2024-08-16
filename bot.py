@@ -145,6 +145,12 @@ def main() -> None:
                           url_path="7191936518:AAFF3c_6vfTbYbxwIUV-Y__tUk5zgniOij4")
     # updater.bot.set_webhook(url=settings.WEBHOOK_URL)
     updater.bot.set_webhook("toyacubebot" + "7191936518:AAFF3c_6vfTbYbxwIUV-Y__tUk5zgniOij4")
+    application.run_webhook(
+    listen="0.0.0.0",
+    port=PORT,
+    secret_token='87ddac01-0855-4cfd-8836-4b01b8a011b7',
+    webhook_url="https://toyacubebot-5013a3d3e8fe.herokuapp.com"
+)
     application.add_handler(conv_handler)
     application.run_polling(allowed_updates=Update.ALL_TYPES)
 
