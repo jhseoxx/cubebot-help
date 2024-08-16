@@ -8,6 +8,7 @@ blinker==1.8.2
 certifi==2024.7.4
 cffi==1.17.0
 charset-normalizer==3.3.2
+cheroot==10.0.1
 click==8.1.7
 colorama==0.4.6
 decorator==5.1.1
@@ -18,12 +19,14 @@ executing==2.0.1
 fastjsonschema==2.20.0
 filelock==3.15.4
 Flask==3.0.3
+gunicorn==23.0.0
 h11==0.14.0
 httpcore==1.0.5
 httpx==0.27.0
 idna==3.7
 ipython==8.12.3
 itsdangerous==2.2.0
+jaraco.functools==4.0.2
 jedi==0.19.1
 Jinja2==3.1.4
 jsonschema==4.23.0
@@ -34,6 +37,7 @@ jupyterlab_pygments==0.3.0
 MarkupSafe==2.1.5
 matplotlib-inline==0.1.7
 mistune==3.0.2
+more-itertools==10.4.0
 nbclient==0.10.0
 nbconvert==7.16.4
 nbformat==5.10.4
@@ -52,6 +56,7 @@ Pygments==2.18.0
 PySocks==1.7.1
 python-dateutil==2.9.0.post0
 python-telegram-bot==21.4
+pywin32==306
 pyzmq==26.1.0
 referencing==0.35.1
 requests==2.32.3
@@ -72,6 +77,7 @@ typing_extensions==4.12.2
 urllib3==2.2.2
 virtualenv==20.26.3
 wcwidth==0.2.13
+web.py==0.62
 webbot==0.34
 webencodings==0.5.1
 websocket-client==1.8.0
