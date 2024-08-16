@@ -56,7 +56,6 @@ Pygments==2.18.0
 PySocks==1.7.1
 python-dateutil==2.9.0.post0
 python-telegram-bot==21.4
-pywin32==306
 pyzmq==26.1.0
 referencing==0.35.1
 requests==2.32.3
@@ -75,6 +74,7 @@ trio==0.26.2
 trio-websocket==0.11.1
 typing_extensions==4.12.2
 urllib3==2.2.2
+uvicorn==0.30.6
 virtualenv==20.26.3
 wcwidth==0.2.13
 web.py==0.62

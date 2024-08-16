@@ -127,8 +127,6 @@ async def send(msg, chat_id, token="7191936518:AAFF3c_6vfTbYbxwIUV-Y__tUk5zgniOi
 def main() -> None:
     application = Application.builder().token("7191936518:AAFF3c_6vfTbYbxwIUV-Y__tUk5zgniOij4").post_init(post_init).build()
     global updater
-    updater = Updater(
-        "7191936518:AAFF3c_6vfTbYbxwIUV-Y__tUk5zgniOij4", use_context=True)
 
     conv_handler = ConversationHandler(
         entry_points=[CommandHandler("start", start)],
@@ -140,11 +138,6 @@ def main() -> None:
         fallbacks=[CommandHandler("cancel", cancel)],
     )
         # Start the Bot
-    updater.start_webhook(listen="0.0.0.0",
-                          port=PORT,
-                          url_path="7191936518:AAFF3c_6vfTbYbxwIUV-Y__tUk5zgniOij4")
-    # updater.bot.set_webhook(url=settings.WEBHOOK_URL)
-    updater.bot.set_webhook("toyacubebot" + "7191936518:AAFF3c_6vfTbYbxwIUV-Y__tUk5zgniOij4")
     application.run_webhook(
     listen="0.0.0.0",
     port=PORT,

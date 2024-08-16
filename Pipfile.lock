@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "626544526c7f10a705a3bd5fc6d8b47d554b0b65f7a7ca7bf7ed85ee3dca1117"
+            "sha256": "a328fb4c4f17e1a1d528ebe29134cb57edb6ad0c089aa31800d63a39f8aef178"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -1139,6 +1139,15 @@
             "index": "pypi",
             "markers": "python_version >= '3.8'",
             "version": "==2.2.2"
+        },
+        "uvicorn": {
+            "hashes": [
+                "sha256:4b15decdda1e72be08209e860a1e10e92439ad5b97cf44cc945fcbee66fc5788",
+                "sha256:65fd46fe3fda5bdc1b03b94eb634923ff18cd35b2f084813ea79d1f103f711b5"
+            ],
+            "index": "pypi",
+            "markers": "python_version >= '3.8'",
+            "version": "==0.30.6"
         },
         "virtualenv": {
             "hashes": [
