@@ -144,7 +144,7 @@ def main() -> None:
                           port=PORT,
                           url_path="7191936518:AAFF3c_6vfTbYbxwIUV-Y__tUk5zgniOij4")
     # updater.bot.set_webhook(url=settings.WEBHOOK_URL)
-    updater.bot.set_webhook("toyacube" + "7191936518:AAFF3c_6vfTbYbxwIUV-Y__tUk5zgniOij4")
+    updater.bot.set_webhook("toyacubebot" + "7191936518:AAFF3c_6vfTbYbxwIUV-Y__tUk5zgniOij4")
     application.add_handler(conv_handler)
     application.run_polling(allowed_updates=Update.ALL_TYPES)
 
