@@ -273,7 +273,7 @@ def main() -> None:
     application = Application.builder().token("7191936518:AAFF3c_6vfTbYbxwIUV-Y__tUk5zgniOij4").post_init(post_init).build()
   
     # Port is given by Heroku
-    PORT = os.environ.get('PORT')
+    PORT = int(os.environ.get('PORT',88))
   
      # Set up the Updater
     updater = Updater(TOKEN)
