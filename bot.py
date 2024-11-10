@@ -1,6 +1,5 @@
 # import everything
 import asyncio
-from flask import Flask, request
 import telegram
 from credentials import bot_token, bot_user_name
 
@@ -17,7 +16,6 @@ from telegram.ext import (
     ConversationHandler,
     MessageHandler,
     filters,
-    Updater
 )
 
 global bot
@@ -36,34 +34,47 @@ logging.basicConfig(
     format="%(asctime)s - %(name)s - %(levelname)s - %(message)s", level=logging.INFO
 )
 
-
-PORT = int(os.environ.get('PORT', '8443'))
-# Define a few command handlers. These usually take the two arguments update and
-# context. Error handlers also receive the raised TelegramError object in error.
-
-# set higher logging level for httpx to avoid all GET and POST requests being logged
 logging.getLogger("httpx").setLevel(logging.ERROR)
 
 logger = logging.getLogger(__name__)
 
-ACTION, LINK, NOTES, SUMMARY = range(4)
+ACTION, LINK, NOTES, SUMMARY, RANDOM, CHAT = range(6)
 
 async def post_init(application: Application) -> None:
     await application.bot.set_my_commands([('start', 'Starts the bot')])
 
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
-    reply_keyboard = [["Request GO/ Split"]]
+    reply_keyboard = [["Request GO/ Split", "Talk"]]
 
     await update.message.reply_text(
         "Hi! I am a Toya Cube. "
         "What would you like to do today? \n"
         ,
         reply_markup=ReplyKeyboardMarkup(
-            reply_keyboard, one_time_keyboard=True, input_field_placeholder="Request GO/ Split"
+            reply_keyboard, one_time_keyboard=True, input_field_placeholder="Anything you like"
         ),
     )
 
     return ACTION
+
+async def talk(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
+
+    user = update.message.from_user
+    logger.info("Request of %s: %s", user.first_name, update.message.text)
+    print(update.message.text)
+    await update.message.reply_text(
+        "Feel free to type anything (do note I do not replace actual humans so I am unable to give advice)",
+    )
+    return RANDOM
+
+async def thank(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
+    user = update.message.from_user
+    logger.info("Request of %s: %s", user.first_name, update.message.text)
+    print(update.message.text)
+    await update.message.reply_text(
+        "Thank you for talking to me today :)",
+    )
+    return ConversationHandler.END
 
 
 async def link(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
@@ -134,16 +145,12 @@ def main() -> None:
             ACTION: [MessageHandler(filters.Regex("^(Request GO/ Split)$"), link)],
             LINK: [MessageHandler(filters.Entity('url'), notes)],
             NOTES: [MessageHandler(filters.TEXT & (~filters.COMMAND), bio)],
+            RANDOM: [MessageHandler(filters.Regex("^(Talk)$"), talk)],
+            CHAT: [MessageHandler(filters.TEXT, thank)],
         },
         fallbacks=[CommandHandler("cancel", cancel)],
     )
-        # Start the Bot
-    application.run_webhook(
-    listen="0.0.0.0",
-    port=PORT,
-    secret_token='87ddac01-0855-4cfd-8836-4b01b8a011b7',
-    webhook_url="https://toyacubebot-5013a3d3e8fe.herokuapp.com"
-)
+
     application.add_handler(conv_handler)
     application.run_polling(allowed_updates=Update.ALL_TYPES)
 
