@@ -1,11 +1,8 @@
 # import everything
-import asyncio
 import telegram
-from credentials import bot_token, bot_user_name
 import random
 import logging
 import os
-from typing import Optional, Tuple
 
 from telegram import ReplyKeyboardMarkup, ReplyKeyboardRemove, Update
 from telegram.constants import ParseMode
@@ -66,7 +63,6 @@ Response = ['Are the birds pretty today\?',
              'Ongeki bright TOYA',
              'maimaiDX TOYA',
              ]
-
 
 global bot
 global TOKEN
