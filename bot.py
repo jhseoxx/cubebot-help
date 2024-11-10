@@ -16,6 +16,7 @@ from telegram.ext import (
     ConversationHandler,
     MessageHandler,
     filters,
+    Updater,
 )
 
 List_Tota = ['He hates squid because of its texture',
@@ -274,7 +275,20 @@ async def send(msg, chat_id, token="7191936518:AAFF3c_6vfTbYbxwIUV-Y__tUk5zgniOi
 
 def main() -> None:
     application = Application.builder().token("7191936518:AAFF3c_6vfTbYbxwIUV-Y__tUk5zgniOij4").post_init(post_init).build()
-    global updater
+  
+    # Port is given by Heroku
+    PORT = os.environ.get('PORT')
+  
+     # Set up the Updater
+    updater = Updater(TOKEN)
+    dp = updater.dispatcher
+
+    # Start the webhook
+    updater.start_webhook(listen="0.0.0.0",
+                          port=int(PORT),
+                          url_path=TOKEN,
+                          webhook_url=f"https://cubismbot-ce9e03348913.herokuapp.com/{TOKEN}")
+    updater.idle()
 
     conv_handler = ConversationHandler(
         entry_points=[CommandHandler("start", start)],
