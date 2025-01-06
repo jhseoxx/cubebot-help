@@ -3,6 +3,7 @@ import telegram
 import random
 import logging
 import os
+import gspread
 
 from telegram import ReplyKeyboardMarkup, ReplyKeyboardRemove, Update
 from telegram.constants import ParseMode
@@ -15,6 +16,10 @@ from telegram.ext import (
     filters,
     Updater,
 )
+
+gc = gspread.service_account()
+sh = gc.open("botarrival")
+print(sh.sheet1.get('A1'))
 
 List_Tota = ['He hates squid because of its texture',
              'He actually cannot handle cold very well',
@@ -90,10 +95,11 @@ async def post_init(application: Application) -> None:
     await application.bot.set_my_commands([('start', 'Starts the bot')])
 
 async def help_command(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
+
     """Send a message when the command /help is issued."""
     await update.message.reply_text('''\U0001F916*Welcome to Cube Bot*\U0001F916\n
                                     \nThis bot was made for use for Aoyagi Cube Club \(\@aoyagiclub\) mainly for split requests and GO requests\.   
-                                    \n*Main commands*\n> \-/start: Starts me \n> \-/help: Sends this message
+                                    \n*Main commands*\n> \-/start: Starts me \n> \-/help: Sends this message \n> \-/arrival: Sends the content of the next 2 arrival boxes
                                     \nPlease click *"Request GO/ Split"* for any channel requests\; The rest of the features are just for a bit of fun\. If any split requests are made through those they *WILL NOT* be made known to me
                                     \nIf there are any bugs\, please message \@toyalove\.
                                     \nBot maintenance is usually every week or before a major merch release\; If the bot is unusable before a merch drop it is usually the case\.
@@ -103,6 +109,21 @@ async def help_command(update: Update, context: ContextTypes.DEFAULT_TYPE) -> No
                                     ''',
                 parse_mode=ParseMode.MARKDOWN_V2
               )
+    
+async def arrival_cmd(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
+    await update.message.reply_text('''\U0001F916 - Please give me a moment to fetch the content''')
+    print(sh.sheet1.col_values(2))  
+    values_list2 = str(sh.sheet1.col_values(2))[1:-1]
+
+
+    values_list = str(sh.sheet1.col_values(1))[1:-1]
+    msg = values_list
+    msg2 = values_list2
+    await update.message.reply_text(f'''\U0001F4E6*Scheduled Arrival Content*\U0001F4E6\n\n__*BOX 1*__\nContents\:\n{msg}
+                                    \n__*BOX 2*__\nContents\:\n{msg2}
+                                    \n>\-Please copy\-paste the tag to check your order\n>\-A maximum of *2 scheduled boxes* will be shown\n>\-*May change depending on release schedule*, will be periodically updated''',
+    parse_mode=ParseMode.MARKDOWN_V2
+    )
 
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
     reply_keyboard = [["Request GO/ Split", "Talk", "Mystery"]]
@@ -271,21 +292,6 @@ async def send(msg, chat_id, token="7191936518:AAFF3c_6vfTbYbxwIUV-Y__tUk5zgniOi
 
 def main() -> None:
     application = Application.builder().token("7191936518:AAFF3c_6vfTbYbxwIUV-Y__tUk5zgniOij4").post_init(post_init).build()
-  
-    # Port is given by Heroku
-    PORT = int(os.environ.get('PORT',88))
-  
-     # Set up the Updater
-    updater = Updater(TOKEN)
-    dp = updater.dispatcher
-
-    # Start the webhook
-    updater.start_webhook(listen="0.0.0.0",
-                          port=int(PORT),
-                          url_path=TOKEN,
-                          webhook_url=f"https://cubismbot-ce9e03348913.herokuapp.com/{TOKEN}")
-    updater.idle()
-
     conv_handler = ConversationHandler(
         entry_points=[CommandHandler("start", start)],
         states={
@@ -316,6 +322,7 @@ def main() -> None:
 
     application.add_handler(conv_handler)
     application.add_handler(CommandHandler("help", help_command))
+    application.add_handler(CommandHandler("arrival",arrival_cmd))
     application.run_polling(allowed_updates=Update.ALL_TYPES)
 
 if __name__ == "__main__":
