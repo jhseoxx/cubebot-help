@@ -271,7 +271,7 @@ async def bio(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
     await update.message.reply_text(
         f'''Request stored in the cube; Thank you! Here's the summary of your request:\n\nRequest From: {requser}\n>Item: {itemlink}\n>Type: {typeofreq} \n>Detail: {detail}'''
                                     )
-    await send(f'''Request From: {requser}\nItem: {itemlink}\nType: {typeofreq} \nDetail: {detail}''',-1002204726204)
+    await send(f'''Request From: {requser}\nItem: {itemlink}\nType: {typeofreq} \nDetail: {detail}''',00000000)
     return ConversationHandler.END
 
 
