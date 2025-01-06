@@ -75,8 +75,8 @@ global TOKEN
 itemlink = ""
 detail = ""
 
-TOKEN = "7191936518:AAFF3c_6vfTbYbxwIUV-Y__tUk5zgniOij4"
-bot = telegram.Bot(token="7191936518:AAFF3c_6vfTbYbxwIUV-Y__tUk5zgniOij4")
+TOKEN = ""
+bot = telegram.Bot(token="a")
 
 linktype = "https://"
 
@@ -285,13 +285,13 @@ async def cancel(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
 
     return ConversationHandler.END
 
-async def send(msg, chat_id, token="7191936518:AAFF3c_6vfTbYbxwIUV-Y__tUk5zgniOij4"):
+async def send(msg, chat_id, token="a"):
     bot = telegram.Bot(token=token)
     bot.initialize
     await bot.sendMessage(chat_id=chat_id, text=msg)
 
 def main() -> None:
-    application = Application.builder().token("7191936518:AAFF3c_6vfTbYbxwIUV-Y__tUk5zgniOij4").post_init(post_init).build()
+    application = Application.builder().token("a").post_init(post_init).build()
     conv_handler = ConversationHandler(
         entry_points=[CommandHandler("start", start)],
         states={
